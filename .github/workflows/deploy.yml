@@ -17,6 +17,7 @@ concurrency:
 
 jobs:
   build:
+    if: github.repository == 'Teinc3/teinc3.github.io'
     runs-on: ubuntu-latest
 
     steps:
@@ -53,4 +54,36 @@ jobs:
       - name: Deploy to Github Pages
         id: deployment
         uses: actions/deploy-pages@v4
-      
+
+  sync-public:
+    if: github.repository == 'Teinc3/teinc3.github.io'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout full history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Strip private content from history
+        run: |
+          pip install git-filter-repo
+          git filter-repo --force --invert-paths \
+            --path markdowns/ \
+            --path assets/pictures/ \
+            --path assets/m2poly_placement.png \
+            --path "2024-03-17-05-32-15.md" \
+            --path "2024-03-17-05-33-28.md" \
+            --path "2024-03-17-05-36-20.md" \
+            --path "English Food.md" \
+            --path "Life Goals.md" \
+            --prune-empty always
+
+      - name: Push structural history to public repo
+        env:
+          SSH_KEY: ${{ secrets.PUBLIC_REPO_DEPLOY_KEY }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+          git push git@github.com:Teinc3/teinc3.net.git HEAD:main --tags
