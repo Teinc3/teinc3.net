@@ -86,4 +86,4 @@ jobs:
           echo "$SSH_KEY" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan github.com >> ~/.ssh/known_hosts
-          git push git@github.com:Teinc3/teinc3.net.git HEAD:main --tags
+          git push git@github.com:Teinc3/teinc3.net.git HEAD:main --tags --force
