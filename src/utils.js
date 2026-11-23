@@ -1,6 +1,7 @@
 const showdown = require('showdown');
 const showdownConfig = {
   disableForced4SpacesIndentedSublists: true,
+  strikethrough: true,
 };
 
 // Define a custom extension

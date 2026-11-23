@@ -10,13 +10,18 @@
 
 Because it's cool.
 
-Everyone builds their own website nowadays with fancy animations, smooth transitions, and all that savvy jazz.
-But this makes the web boring.
+Everyone builds their own website nowadays with fancy animations, smooth transitions, and all that savvy jazz. But this makes the web boring.
 
 So why not go back to the good old days when everything was simple and ugly?
 
 I might even argue that it's more attractive to have such a website, because it's different from the rest.
 
-### Yeah, I get the point. Now what?
+### Quick Start
+I made this structured fork public such that anyone interested could just fork and clone the repository and publish their own sites onto github pages using the same template.
 
-I don't know. I'm just a README file describing why my website is in HTML4. What else do you want from me?
+To build the static pages, run `npm run start`.
+
+You might want to use a server such as `Live Server` on VS Code to visualise a local development version of the site.
+Make sure you configure the plugin such that it returns 404.htmnl for a blank page so the autoredirection/Not Found behavior mirrors that of github pages.
+
+Modify the deployment script in `.github/workflows/deploy.yml` according to your own repository rules so that GH Actions can build your pages accordingly.
